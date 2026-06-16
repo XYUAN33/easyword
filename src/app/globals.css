@@ -1,0 +1,57 @@
+@import "tailwindcss";
+
+:root {
+  /* 主色调：明快温暖，适合儿童 */
+  --primary: #3b82f6;       /* 蓝色 */
+  --primary-light: #93c5fd;
+  --primary-dark: #1d4ed8;
+  --accent: #f97316;        /* 橙色 */
+  --accent-light: #fdba74;
+  --success: #22c55e;       /* 绿色 - 正确反馈 */
+  --error: #ef4444;         /* 红色 - 错误提示 */
+  --warning: #eab308;       /* 黄色 */
+
+  --background: #f8fafc;
+  --foreground: #1e293b;
+  --card: #ffffff;
+  --card-foreground: #334155;
+  --muted: #f1f5f9;
+  --muted-foreground: #64748b;
+  --border: #e2e8f0;
+  --radius: 12px;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-primary-light: var(--primary-light);
+  --color-primary-dark: var(--primary-dark);
+  --color-accent: var(--accent);
+  --color-accent-light: var(--accent-light);
+  --color-success: var(--success);
+  --color-error: var(--error);
+  --color-warning: var(--warning);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --font-sans: "PingFang SC", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans, sans-serif);
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* 移动端友好：禁止双击缩放、更好的触摸体验 */
+* {
+  -webkit-touch-callout: none;
+}
+
+button, a {
+  touch-action: manipulation;
+}

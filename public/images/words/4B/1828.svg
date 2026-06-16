@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256">
+  <rect width="256" height="256" rx="24" fill="#F3E5F5"/>
+  <text x="128" y="120" font-size="80" text-anchor="middle" dominant-baseline="central">📖</text>
+  <text x="128" y="200" font-size="20" font-weight="bold" font-family="Arial, sans-serif" text-anchor="middle" fill="#333">bring</text>
+</svg>

@@ -1,0 +1,115 @@
+// EasyWord - 外研版小学英语背单词 & 阅读练习
+// Prisma Schema
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ==================== 用户相关 ====================
+
+model User {
+  id          Int      @id @default(autoincrement())
+  phone       String   @unique
+  nickname    String?
+  grade       String?  // 如 "grade_3", "grade_4"
+  avatarUrl   String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // 关联
+  wordProgress  UserWordProgress[]
+  readingHistory ReadingHistory[]
+  sessions      Session[]
+}
+
+model Session {
+  id        String   @id @default(cuid())
+  userId    Int
+  token     String   @unique
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+// ==================== 词库相关 ====================
+
+model Word {
+  id        Int    @id @default(autoincrement())
+  book      String // 册别: "3A", "3B", "4A" ...
+  unit      String // 单元: "Unit1", "Unit2" ...
+  module    String // 模块: "Module1", "Module2" ...
+  word      String // 单词
+  meaning   String @default("") // 中文释义
+  phonetic  String? // 音标
+  audioUrl  String? // 预生成 MP3 路径
+
+  // JSON 字段 (SQLite 中存为 TEXT)
+  phrases   String  @default("[]") // JSON: [{text, audioUrl}]
+  sentences String  @default("[]") // JSON: [{text, audioUrl, source}]
+
+  // 关联
+  progress UserWordProgress[]
+
+  @@unique([book, unit, word])
+  @@index([book, unit])
+}
+
+// ==================== 学习进度 ====================
+
+model UserWordProgress {
+  id           Int      @id @default(autoincrement())
+  userId       Int
+  wordId       Int
+  firstLearned DateTime @default(now())
+  reviewCount  Int      @default(0)
+  nextReview   DateTime // 下次复习时间
+  status       String   @default("learning") // learning / reviewing / mastered
+  errorCount   Int      @default(0) // 累计拼写错误次数
+  updatedAt    DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  word Word @relation(fields: [wordId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, wordId])
+  @@index([userId, nextReview])
+  @@index([userId, status])
+}
+
+// ==================== 阅读练习 ====================
+
+model ReadingHistory {
+  id          Int      @id @default(autoincrement())
+  userId      Int
+  book        String
+  unit        String
+  passage     String   // 生成的短文
+  questions   String   // JSON: [{question, options, correct, explanation}]
+  userAnswers String?  // JSON: [0, 2, 1, ...] 用户选择索引
+  score       Int?
+  createdAt   DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, createdAt])
+}
+
+// ==================== 课文内容 (用于 RAG 前的本地备份) ====================
+
+model TextbookContent {
+  id      Int    @id @default(autoincrement())
+  book    String
+  unit    String
+  module  String
+  title   String?
+  content String // markdown 课文全文
+  words   String @default("[]") // JSON: 该模块对应的已学词汇
+
+  @@unique([book, unit, module])
+  @@index([book])
+}
