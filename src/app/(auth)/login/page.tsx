@@ -40,7 +40,7 @@ export default function LoginPage() {
       <div className="w-full max-w-sm">
         {/* Logo */}
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-primary">🌟 EasyWord</h1>
+          <h1 className="text-3xl font-bold text-primary"><img src="/单词icon.png" alt="" className="w-8 h-8 inline-block align-middle mr-1" /> EasyWord</h1>
           <p className="mt-2 text-muted-foreground">输入手机号开始学习</p>
         </div>
 

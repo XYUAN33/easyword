@@ -327,12 +327,17 @@ export default function VocabularyPage() {
                         <td className="px-3 py-2">
                           <div className="flex items-center gap-2">
                             <img
-                              src={`/images/words/${selectedBook}/${w.id}.svg`}
+                              src={`/images/words/${selectedBook}/${w.id}.png`}
                               alt={w.word}
                               className="w-8 h-8 rounded-lg flex-shrink-0"
                               loading="lazy"
                               onError={(e) => {
-                                (e.target as HTMLImageElement).style.display = "none"
+                                const img = e.target as HTMLImageElement
+                                if (!img.src.endsWith(".svg")) {
+                                  img.src = `/images/words/${selectedBook}/${w.id}.svg`
+                                } else {
+                                  img.style.display = "none"
+                                }
                               }}
                             />
                             <div>

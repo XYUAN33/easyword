@@ -306,11 +306,16 @@ function SessionContent() {
           <div className="text-center">
             {/* 单词配图 */}
             <img
-              src={`/images/words/${book}/${currentWord.id}.svg`}
+              src={`/images/words/${book}/${currentWord.id}.png`}
               alt={currentWord.word}
               className="w-32 h-32 mx-auto mb-4 rounded-2xl"
               onError={(e) => {
-                (e.target as HTMLImageElement).style.display = "none"
+                const img = e.target as HTMLImageElement
+                if (!img.src.endsWith(".svg")) {
+                  img.src = `/images/words/${book}/${currentWord.id}.svg`
+                } else {
+                  img.style.display = "none"
+                }
               }}
             />
             <h2 className="text-3xl font-bold text-foreground mb-2">
@@ -364,6 +369,20 @@ function SessionContent() {
       {step === "spell" && (
         <div className="flex flex-col items-center gap-6 flex-1">
           <div className="text-center">
+            {/* 单词配图 */}
+            <img
+              src={`/images/words/${book}/${currentWord.id}.png`}
+              alt={currentWord.word}
+              className="w-32 h-32 mx-auto mb-4 rounded-2xl"
+              onError={(e) => {
+                const img = e.target as HTMLImageElement
+                if (!img.src.endsWith(".svg")) {
+                  img.src = `/images/words/${book}/${currentWord.id}.svg`
+                } else {
+                  img.style.display = "none"
+                }
+              }}
+            />
             <h2 className="text-3xl font-bold text-foreground mb-2">
               {currentWord.word}
             </h2>
@@ -395,6 +414,21 @@ function SessionContent() {
       {/* 步骤C：拖拽排序 */}
       {step === "sort" && (
         <div className="flex flex-col items-center gap-6 flex-1">
+          {/* 单词配图 */}
+          <img
+            src={`/images/words/${book}/${currentWord.id}.png`}
+            alt={currentWord.word}
+            className="w-28 h-28 mx-auto rounded-2xl"
+            onError={(e) => {
+              const img = e.target as HTMLImageElement
+              if (!img.src.endsWith(".svg")) {
+                img.src = `/images/words/${book}/${currentWord.id}.svg`
+              } else {
+                img.style.display = "none"
+              }
+            }}
+          />
+
           {/* 显示正确答案（容错提示） */}
           {showAnswer && (
             <div className="w-full p-4 rounded-xl bg-amber-50 border border-amber-200 text-center animate-pulse">
@@ -433,9 +467,24 @@ function SessionContent() {
 
       {/* 步骤C-1：字母填空模式 */}
       {step === "fill" && currentWord && (
-        <LetterFill
-          key={currentWord.id}
-          word={currentWord.word}
+        <div className="flex flex-col items-center gap-6 flex-1">
+          {/* 单词配图 */}
+          <img
+            src={`/images/words/${book}/${currentWord.id}.png`}
+            alt={currentWord.word}
+            className="w-28 h-28 mx-auto rounded-2xl"
+            onError={(e) => {
+              const img = e.target as HTMLImageElement
+              if (!img.src.endsWith(".svg")) {
+                img.src = `/images/words/${book}/${currentWord.id}.svg`
+              } else {
+                img.style.display = "none"
+              }
+            }}
+          />
+          <LetterFill
+            key={currentWord.id}
+            word={currentWord.word}
           onComplete={(correct) => {
             if (correct) {
               setConsecutiveErrors(0)
@@ -455,6 +504,7 @@ function SessionContent() {
             }, 1200)
           }}
         />
+        </div>
       )}
 
       {/* 步骤C-2：选择题模式（汉语选单词 / 单词选汉语） */}

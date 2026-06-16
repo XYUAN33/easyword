@@ -50,7 +50,7 @@ export default function MainLayout({
       <header className="sticky top-0 z-10 bg-card/95 backdrop-blur border-b border-border">
         <div className="flex items-center justify-between h-12 px-4 max-w-md mx-auto">
           <Link href="/" className="text-lg font-bold text-primary">
-            🌟 EasyWord
+            <img src="/单词icon.png" alt="" className="w-6 h-6 inline-block align-middle mr-1" /> EasyWord
           </Link>
           {!loading && user && (
             <div className="flex items-center gap-2">

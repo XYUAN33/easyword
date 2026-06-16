@@ -19,7 +19,7 @@ export default function HomePage() {
       {/* Header */}
       <header className="text-center mb-8 sm:mb-12">
         <h1 className="text-3xl sm:text-4xl font-bold text-primary">
-          🌟 EasyWord
+          <img src="/单词icon.png" alt="" className="w-8 h-8 inline-block align-middle mr-1" /> EasyWord
         </h1>
         <p className="mt-2 text-base sm:text-lg text-muted-foreground">
           轻松背单词，快乐学英语

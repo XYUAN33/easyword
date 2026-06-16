@@ -5,6 +5,10 @@ export const metadata: Metadata = {
   title: "EasyWord - 轻松背单词",
   description: "外研版小学英语背单词和阅读练习",
   manifest: "/manifest.json",
+  icons: {
+    icon: "/单词icon.png",
+    apple: "/单词icon.png",
+  },
 };
 
 export const viewport: Viewport = {
