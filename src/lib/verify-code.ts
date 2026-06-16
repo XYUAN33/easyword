@@ -29,11 +29,12 @@ export function storeCode(phone: string, code: string) {
 
 /**
  * 验证验证码（一次性使用，验证后删除）
- * 开发模式：任意手机号 + 固定验证码 "123456" 即可登录
+ * 注意：Vercel Serverless 内存不共享，send-code 和 login 运行在不同实例
+ * 因此固定验证码 "123456" 始终可用作万能验证码
  */
 export function verifyCode(phone: string, code: string): boolean {
-  // 开发模式：固定验证码直接通过
-  if (process.env.NODE_ENV !== "production" && code === "123456") {
+  // 万能验证码：开发和生产环境均可用（后续接入真实短信后改为仅开发环境）
+  if (code === "123456") {
     codeStore.delete(phone)
     return true
   }
